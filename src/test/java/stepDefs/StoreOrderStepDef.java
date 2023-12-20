@@ -8,6 +8,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import pages.AddToCartPage;
+import pages.CartPage;
 import pages.StoreLoginPage;
 
 
@@ -16,11 +17,12 @@ public class StoreOrderStepDef {
 	WebDriver driver=StoreTestBase.getDriver();
 	StoreLoginPage loginPage;
 	AddToCartPage addToCartPage;
-	
+	CartPage cartPage;
 	public StoreOrderStepDef()
 	{
 		loginPage=new StoreLoginPage(driver);
 		addToCartPage=new AddToCartPage(driver);
+		cartPage=new CartPage(driver);
 	}
 	
 	@Given("User is on login Page")
@@ -41,23 +43,25 @@ public class StoreOrderStepDef {
 	}
 	
 	@When("Add an item to cart")
-	public void add_an_item_to_cart() {
-	    addToCartPage.addItems();
+	public void add_an_item_to_cart() throws InterruptedException {
+	    addToCartPage.addItems(driver);
 	}
 
 	@Then("Items must be added to cart")
 	public void items_must_be_added_to_cart() {
-	    
+		
+	    Assert.assertTrue(addToCartPage.isOnCart());   
 	}
 	
 	@When("List of Items should be available in cart")
 	public void list_of_items_should_be_available_in_cart() {
 	  
+		cartPage.isProductsAvailable();
 	}
 
 	@Then("Delete an item from cart")
-	public void delete_an_item_from_cart() {
-	    
+	public void delete_an_item_from_cart() throws InterruptedException {
+	    cartPage.deleteItems();
 	}
 
 	

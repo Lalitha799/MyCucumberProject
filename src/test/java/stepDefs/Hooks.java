@@ -11,7 +11,7 @@ import io.cucumber.java.Scenario;
 public class Hooks {
 
 	@Before
-	public static void setupDriver()
+	public static  void setupDriver()
 	{
 		StoreTestBase.initDriver();
 	}
